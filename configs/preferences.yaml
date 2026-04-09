@@ -1,0 +1,6 @@
+# Interpretable preference weights (reward shaping on top of CartPole-v1).
+# Increase velocity_l2_penalty to discourage pole wobble; increase action_switch_penalty
+# to penalize thrashing between left/right.
+
+velocity_l2_penalty: 0.002
+action_switch_penalty: 0.05

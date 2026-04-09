@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "preflex-rl"
+version = "0.1.0"
+description = "Preference-shaped DQN on CartPole + optional CrewAI debrief over training metrics"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "gymnasium[classic-control]>=0.29",
+  "numpy>=1.24",
+  "pyyaml>=6.0",
+  "torch>=2.0",
+]
+
+[project.optional-dependencies]
+crew = ["crewai>=0.80", "openai>=1.0"]
+dev = ["pytest>=8.0", "ruff>=0.6"]
+
+[project.scripts]
+preflex-train = "preflex_rl.train:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
