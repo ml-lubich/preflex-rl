@@ -32,9 +32,65 @@ flowchart LR
 ## Table of contents
 
 - [What this is](#what-this-is)
+- [Training loop (algorithm)](#training-loop-algorithm)
+- [Debrief sequence](#debrief-sequence)
 - [Quick start](#quick-start)
 - [Layout](#layout)
 - [License](#license)
+
+## Training loop (algorithm)
+
+```mermaid
+flowchart LR
+    A([preflex-train])
+    B["load preferences.yaml<br/>shaping weights"]
+    C["build CartPole + ShapingWrapper"]
+    D["reset DQN<br/>policy + target net + replay"]
+    E["ε-greedy action"]
+    F["step env<br/>shape reward"]
+    G["push to replay buffer"]
+    H{"buffer warm?"}
+    I["sample batch<br/>compute TD loss"]
+    J["backprop policy net"]
+    K{"sync interval?"}
+    L["copy policy → target"]
+    M{"steps left?"}
+    N["write metrics.json"]
+    Z([done])
+    A --> B --> C --> D --> E --> F --> G --> H
+    H -- no  --> M
+    H -- yes --> I --> J --> K
+    K -- yes --> L --> M
+    K -- no  --> M
+    M -- yes --> E
+    M -- no  --> N --> Z
+```
+
+## Debrief sequence
+
+```mermaid
+sequenceDiagram
+    participant U as user
+    participant D as preflex-debrief
+    participant FS as runs/metrics.json
+    participant MM as MiniMax
+    participant CR as CrewAI
+    participant LOC as local fallback
+
+    U->>D: preflex-debrief metrics.json
+    D->>FS: read metrics
+    alt MINIMAX_API_KEY + PREFLEX_USE_MINIMAX!=0
+        D->>MM: chat(metrics summary)
+        MM-->>D: narrative
+    else PREFLEX_USE_CREW=1
+        D->>CR: crew.kickoff()
+        CR-->>D: narrative
+    else
+        D->>LOC: deterministic summary
+        LOC-->>D: narrative
+    end
+    D-->>U: debrief output
+```
 
 ## What this is
 
