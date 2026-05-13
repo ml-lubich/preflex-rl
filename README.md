@@ -38,6 +38,7 @@ flowchart LR
 - [Layout](#layout)
 - [License](#license)
 - [🗺️ Repository map](#️-repository-map)
+- [📊 Code composition](#-code-composition)
 
 ## Training loop (algorithm)
 
@@ -165,4 +166,18 @@ mindmap
       LICENSE
       README.md
       pyproject.toml
+```
+
+
+## 📊 Code composition
+
+File-type breakdown of source under this repo (skips `.git`, `node_modules`, build caches, lockfiles).
+
+```mermaid
+pie showData title File-type composition of preflex-rl (20 files)
+    "Python" : 16
+    "Other" : 1
+    "TOML" : 1
+    "Markdown" : 1
+    "YAML" : 1
 ```
