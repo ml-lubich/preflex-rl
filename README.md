@@ -37,6 +37,7 @@ flowchart LR
 - [Quick start](#quick-start)
 - [Layout](#layout)
 - [License](#license)
+- [🗺️ Repository map](#️-repository-map)
 
 ## Training loop (algorithm)
 
@@ -138,3 +139,30 @@ preflex-train --smoke --steps 400 --metrics-out runs/metrics.json
 ## License
 
 MIT
+
+
+## 🗺️ Repository map
+
+Top-level layout of `preflex-rl` rendered as a Mermaid mindmap (auto-generated from the on-disk tree).
+
+```mermaid
+mindmap
+  root((preflex-rl))
+    configs/
+      preferences.yaml
+    scripts/
+      crew_debrief.py
+    src/
+      preflex_rl
+    tests/
+      test_debrief.py
+      test_dqn.py
+      test_minimax_debrief.py
+      test_minimax_strip.py
+      test_preferences.py
+      test_shaping.py
+    files
+      LICENSE
+      README.md
+      pyproject.toml
+```
