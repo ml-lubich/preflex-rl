@@ -2,6 +2,40 @@
 
 **Preflex** = *preference-flexible* reinforcement learning: a **real DQN** trainer on **CartPole-v1** where you steer behavior with **interpretable YAML preferences** (velocity smoothing, anti-thrashing), not a template-only repo.
 
+```mermaid
+flowchart LR
+    YAML[("🎚 configs/preferences.yaml")]
+    CLI{{"💻 preflex-train · preflex-debrief"}}
+    SHAPE["⚖️ shaping.py<br/>CartPole reward shaping"]
+    DQN["🧠 dqn.py<br/>replay + target net + ε-greedy"]
+    METR[/"📊 runs/metrics.json"/]
+    DEB["📝 debrief.py"]
+    MM["🛰 minimax_debrief.py"]
+    LLM(("🤖 MiniMax / Crew"))
+    REPORT[/"📄 debrief output"/]
+
+    YAML --> SHAPE
+    CLI --> SHAPE --> DQN --> METR
+    METR --> DEB --> MM --> LLM --> REPORT
+    DEB -. local fallback .-> REPORT
+
+    classDef io fill:#0e1116,stroke:#2f81f7,stroke-width:1.5px,color:#e6edf3;
+    classDef brain fill:#161b22,stroke:#d29922,stroke-width:1.5px,color:#e6edf3;
+    classDef tool fill:#161b22,stroke:#3fb950,stroke-width:1.5px,color:#e6edf3;
+    classDef out fill:#0e1116,stroke:#a371f7,stroke-width:1.5px,color:#e6edf3;
+    class CLI brain;
+    class YAML,LLM io;
+    class SHAPE,DQN,DEB,MM tool;
+    class METR,REPORT out;
+```
+
+## Table of contents
+
+- [What this is](#what-this-is)
+- [Quick start](#quick-start)
+- [Layout](#layout)
+- [License](#license)
+
 ## What this is
 
 - **RL core:** PyTorch DQN with replay buffer, target network, ε-greedy exploration.
